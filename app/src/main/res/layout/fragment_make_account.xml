@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/createAccountFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MakeAccountFragment">
+
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="548dp"
+        android:autofillHints="@string/username"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/person_silhouette"
+        android:drawablePadding="20sp"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:padding="20sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/username"
+        android:layout_marginTop="24dp"
+        android:autofillHints="@string/password"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:drawablePadding="20sp"
+        android:hint="@string/password"
+        android:inputType="text|textPassword"
+        android:padding="20sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <EditText
+        android:id="@+id/confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/username"
+        android:layout_marginTop="24dp"
+        android:autofillHints="Confirm Password"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:drawablePadding="20sp"
+        android:hint="Confirm Password"
+        android:inputType="text|textPassword"
+        android:padding="20sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/goToMainbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to main"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/StapleGreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password"
+        app:layout_constraintVertical_bias="0.345" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backToLoginbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to login"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/StapleGreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password"
+        app:layout_constraintVertical_bias="0.345" />
+</androidx.constraintlayout.widget.ConstraintLayout>
