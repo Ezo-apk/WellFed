@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "488779388401",
+    "project_id": "wellfed-e337e",
+    "storage_bucket": "wellfed-e337e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488779388401:android:fbf833b736d4b468a66050",
+        "android_client_info": {
+          "package_name": "com.example.wellfed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488779388401-vo9ctfuq6t69krqpv7s1psf9bg7lm2kt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiS7xEThokwyvmORBmj2c8lHrrUP7lSEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488779388401-vo9ctfuq6t69krqpv7s1psf9bg7lm2kt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

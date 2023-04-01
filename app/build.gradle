@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -44,6 +45,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.5.3")
+    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
     androidTestImplementation("androidx.navigation:navigation-testing:2.5.3")
 
     implementation 'androidx.core:core-ktx:1.7.0'

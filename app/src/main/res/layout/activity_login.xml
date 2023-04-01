@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
-
+    android:background="#FDFCFC"
+    tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/logo"
@@ -23,15 +23,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
-        android:autofillHints="@string/username"
+        android:autofillHints="@string/email"
         android:background="#30ffffff"
         android:drawableStart="@drawable/person_silhouette"
         android:drawablePadding="20sp"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:inputType="text"
         android:padding="20sp"
         android:textColor="@color/black"
@@ -45,7 +45,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/username"
+        android:layout_below="@id/email"
         android:layout_marginTop="24dp"
         android:autofillHints="@string/password"
         android:background="#30ffffff"
@@ -57,7 +57,7 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
         android:id="@+id/forgotPassText"
@@ -109,7 +109,6 @@
         app:iconTint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
