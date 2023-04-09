@@ -17,7 +17,9 @@ import android.Manifest
 import android.content.Intent
 import android.media.Image
 import android.net.Uri
+import android.os.Environment
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -28,17 +30,22 @@ import java.util.*
 
 class CameraActivity : AppCompatActivity() {
 
-//    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityCameraBinding
     private var imageCapture: ImageCapture? = null
     private lateinit var outputDirectory: File
+    private lateinit var photoFile: File
+    private lateinit var savedUri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         outputDirectory = getOutputDirectory()
+
+        photoFile = getPhotoFile("testPhoto.jpg")
 
         if (allPermissionsGranted()) {
                 startCamera()
@@ -48,15 +55,13 @@ class CameraActivity : AppCompatActivity() {
 
         binding.takePhotoBtn.setOnClickListener {
             takePhoto()
-//            val goToHome = Intent(this, MainActivity::class.java)
-//            startActivity(goToHome)
-//            finish()
         }
+
     }
 
 
     private fun getOutputDirectory(): File {
-        val mediaDir = externalMediaDirs.firstOrNull()?.let{mFile ->
+        val mediaDir = externalMediaDirs.firstOrNull()?.let{ mFile ->
             File(mFile, resources.getString(R.string.app_name)).apply {
                 mkdirs()
             }
@@ -65,26 +70,44 @@ class CameraActivity : AppCompatActivity() {
             mediaDir else filesDir
     }
 
+
     private fun takePhoto() {
+//        savedUri = Uri.EMPTY
         val imageCapture = imageCapture ?: return
         val photoFile = File(outputDirectory,
                              SimpleDateFormat("yy-MM-dd-HH-mm-ss",
                                               Locale.getDefault()).format(System.currentTimeMillis()) + ".jpg")
         val outputOption =ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        val goToMain = Intent(this, MainActivity::class.java)
 
         imageCapture.takePicture(outputOption,
                                  ContextCompat.getMainExecutor(this),
                                  object: ImageCapture.OnImageSavedCallback {
                                      override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                                         val savedUri = Uri.fromFile(photoFile)
-                                         Toast.makeText(this@CameraActivity, "$savedUri", Toast.LENGTH_SHORT).show()
+                                         savedUri = Uri.fromFile(photoFile)
+                                         Toast.makeText(this@CameraActivity, "$savedUri", Toast.LENGTH_LONG).show()
+//                                         goToMain.putExtra("Uri", savedUri.toString())
                                      }
 
                                      override fun onError(exception: ImageCaptureException) {
                                          Log.e("Camera", "onError: ${exception.message}", exception)
+                                         return
                                      }
 
                                  })
+        savedUri = Uri.fromFile(photoFile)
+        goToMain.putExtra("Uri", savedUri.toString())
+        Thread.sleep(2_000)
+        startActivity(goToMain)
+        finish()
+        if(isFinishing) {
+            return
+        }
+    }
+
+    private fun getPhotoFile(fileName :String): File {
+        val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
 
     private fun startCamera() {
@@ -100,7 +123,7 @@ class CameraActivity : AppCompatActivity() {
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
 
             }
         }, ContextCompat.getMainExecutor(this))
@@ -112,18 +135,24 @@ class CameraActivity : AppCompatActivity() {
         grantResults: IntArray ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == 123) {
-            if(allPermissionsGranted()) {
-
-            } else {
-
-            }
-        }
+//        if(requestCode == 123) {
+//            if(allPermissionsGranted()) {
+//
+//            } else {
+//
+//            }
+//        }
     }
 
     private fun allPermissionsGranted() =
         arrayOf(Manifest.permission.CAMERA).all {
             ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
         }
+
+    override fun onBackPressed() {
+        val goToMain = Intent(this, MainActivity::class.java)
+        startActivity(goToMain)
+        finish()
+    }
 
 }

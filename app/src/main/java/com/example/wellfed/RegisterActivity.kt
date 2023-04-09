@@ -69,6 +69,9 @@ class RegisterActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             Toast.makeText(this, "You did it fam.", Toast.LENGTH_SHORT).show()
                             val user = auth.currentUser
+
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
                         } else {
                             Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                         }
