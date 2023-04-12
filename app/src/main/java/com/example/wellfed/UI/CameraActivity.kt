@@ -1,21 +1,15 @@
-package com.example.wellfed
+package com.example.wellfed.UI
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.wellfed.databinding.ActivityCameraBinding
 import android.Manifest
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
@@ -24,6 +18,7 @@ import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import com.example.wellfed.R
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*

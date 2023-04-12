@@ -1,4 +1,4 @@
-package com.example.wellfed
+package com.example.wellfed.functionality
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wellfed.R
 
 class DataAdapter (private val items: MutableList<DataModel>) : RecyclerView.Adapter<DataAdapter.ViewHolder>() {
 
@@ -19,12 +20,12 @@ class DataAdapter (private val items: MutableList<DataModel>) : RecyclerView.Ada
         myListener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
         return ViewHolder(itemView, myListener)
     }
 
-    override fun onBindViewHolder(holder: DataAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = items[position]
         holder.postImage.setImageResource(currentItem.photo)
         holder.postTitle.text = currentItem.title

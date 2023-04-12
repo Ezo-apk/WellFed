@@ -1,15 +1,16 @@
-package com.example.wellfed
+package com.example.wellfed.UI
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.wellfed.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -44,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
         signupBtn.setOnClickListener {
             val goToRegister = Intent(this, RegisterActivity::class.java)
             startActivity(goToRegister)
+            this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
             finish()
         }
 
@@ -68,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
                             val user = auth.currentUser
                             val goToMain = Intent(this, MainActivity::class.java)
                             startActivity(goToMain)
+                            this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
                             finish()
                         } else {
                             Toast.makeText(baseContext, "Wrong credentials", Toast.LENGTH_SHORT).show()

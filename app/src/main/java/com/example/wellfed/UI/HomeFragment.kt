@@ -1,8 +1,6 @@
-package com.example.wellfed
+package com.example.wellfed.UI
 
-import android.app.Activity
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wellfed.R
 import com.example.wellfed.databinding.FragmentHomeBinding
+import com.example.wellfed.functionality.DataAdapter
+import com.example.wellfed.functionality.DataModel
 
 class HomeFragment : Fragment() {
 
@@ -56,6 +57,8 @@ class HomeFragment : Fragment() {
         dataAdapter.setOnItemClickListener(object : DataAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
                 openWholePost()
+                val aux = postList[position].title
+                Toast.makeText(context, "Congrats, you clicked on $aux", Toast.LENGTH_SHORT).show()
             }
 
         })

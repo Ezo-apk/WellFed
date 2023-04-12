@@ -1,4 +1,4 @@
-package com.example.wellfed
+package com.example.wellfed.functionality
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -8,10 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
-import android.widget.RemoteViews.RemoteView
 import androidx.core.app.NotificationCompat
+import com.example.wellfed.R
+import com.example.wellfed.UI.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.ProtoEncoderDoNotUse
 import com.google.firebase.messaging.RemoteMessage
 
 

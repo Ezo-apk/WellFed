@@ -1,21 +1,14 @@
-package com.example.wellfed
+package com.example.wellfed.UI
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.wellfed.databinding.ActivityRegisterBinding
+import com.example.wellfed.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -51,6 +44,7 @@ class RegisterActivity : AppCompatActivity() {
         backBtn.setOnClickListener {
             val goToLogin = Intent(this, LoginActivity::class.java)
             startActivity(goToLogin)
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
             finish()
         }
 
@@ -71,6 +65,7 @@ class RegisterActivity : AppCompatActivity() {
                             val user = auth.currentUser
 
                             startActivity(Intent(this, MainActivity::class.java))
+                            this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
                             finish()
                         } else {
                             Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()

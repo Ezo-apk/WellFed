@@ -1,32 +1,30 @@
-package com.example.wellfed
+package com.example.wellfed.UI
 
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.view.WindowManager
-import androidx.navigation.ui.AppBarConfiguration
-import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.wellfed.R
 import com.example.wellfed.databinding.ActivityMainBinding
+import com.example.wellfed.functionality.ApiInterface
+import com.example.wellfed.functionality.NutritionDataItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.io.File
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
+const val BASE_URL = ""
+const val API_KEY = "A5XqIsUW3e3gzQgbBwc0hQ==u6Xh5cbGrdbkgrEx"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -38,16 +36,30 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logOut -> {
+                Firebase.auth.signOut()
+                val goToLogin = Intent(this, LoginActivity::class.java)
+                startActivity(goToLogin)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+
+    }
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         setContentView(R.layout.activity_main)
 
 
@@ -62,22 +74,11 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         val user = auth.currentUser
-        val logout = findViewById<Button>(R.id.LogOutbtn)
-
         if (user == null) {
             val goToLogin = Intent(this, LoginActivity::class.java)
             startActivity(goToLogin)
             finish()
         }
-
-        logout.setOnClickListener {
-            Firebase.auth.signOut()
-            val goToLogin = Intent(this, LoginActivity::class.java)
-            startActivity(goToLogin)
-            finish()
-        }
-
-
 
 
 
@@ -103,8 +104,30 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    private fun getFoodData() {
+        val retrofitBuilder = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .build()
+            .create(ApiInterface::class.java)
+
+        val retrofitData = retrofitBuilder.getFoodData()
+
+        retrofitData.enqueue(object : Callback<List<NutritionDataItem>?> {
+            override fun onResponse(
+                        call: Call<List<NutritionDataItem>?>,
+                        response: Response<List<NutritionDataItem>?>) {
+                val responseBody = response.body()
+            }
+
+            override fun onFailure(call: Call<List<NutritionDataItem>?>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
     private fun beginCameraPain() {
-        Toast.makeText(this, "Kill yourself", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "I simply refuse", Toast.LENGTH_LONG).show()
 //        val goToCamera = Intent(this, CameraActivity::class.java)
 //        startActivity(goToCamera)
 //        createPost()
