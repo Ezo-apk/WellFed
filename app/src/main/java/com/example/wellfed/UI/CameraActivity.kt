@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.wellfed.databinding.ActivityCameraBinding
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -19,6 +20,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import com.example.wellfed.R
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -76,28 +78,22 @@ class CameraActivity : AppCompatActivity() {
         val goToMain = Intent(this, MainActivity::class.java)
 
         imageCapture.takePicture(outputOption,
-                                 ContextCompat.getMainExecutor(this),
-                                 object: ImageCapture.OnImageSavedCallback {
-                                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                                         savedUri = Uri.fromFile(photoFile)
-                                         Toast.makeText(this@CameraActivity, "$savedUri", Toast.LENGTH_LONG).show()
-//                                         goToMain.putExtra("Uri", savedUri.toString())
-                                     }
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    savedUri = Uri.fromFile(photoFile)
+                    Toast.makeText(this@CameraActivity, "$savedUri", Toast.LENGTH_LONG).show()
+                    goToMain.putExtra("imageUri", savedUri.toString())
+                    setResult(Activity.RESULT_OK, goToMain)
+                    finish()
+                }
 
-                                     override fun onError(exception: ImageCaptureException) {
-                                         Log.e("Camera", "onError: ${exception.message}", exception)
-                                         return
-                                     }
+                override fun onError(exception: ImageCaptureException) {
+                    Log.e("Camera", "onError: ${exception.message}", exception)
+                    return
+                }
 
-                                 })
-        savedUri = Uri.fromFile(photoFile)
-        goToMain.putExtra("Uri", savedUri.toString())
-        Thread.sleep(2_000)
-        startActivity(goToMain)
-        finish()
-        if(isFinishing) {
-            return
-        }
+            })
     }
 
     private fun getPhotoFile(fileName :String): File {
@@ -130,13 +126,13 @@ class CameraActivity : AppCompatActivity() {
         grantResults: IntArray ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-//        if(requestCode == 123) {
-//            if(allPermissionsGranted()) {
-//
-//            } else {
-//
-//            }
-//        }
+        if(requestCode == 123) {
+            if(allPermissionsGranted()) {
+                Toast.makeText(this, "Thank you", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No permissions >:(", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun allPermissionsGranted() =
@@ -147,6 +143,7 @@ class CameraActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val goToMain = Intent(this, MainActivity::class.java)
         startActivity(goToMain)
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
         finish()
     }
 

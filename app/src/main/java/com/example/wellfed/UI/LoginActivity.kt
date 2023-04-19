@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.example.wellfed.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         auth = Firebase.auth
+        val database = Firebase.firestore
 
         val loginBtn = findViewById<Button>(R.id.loginbtn)
         val signupBtn = findViewById<Button>(R.id.signupbtn)
@@ -50,10 +52,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         forgotpass.setOnClickListener {
-            Toast.makeText(this, "Remember it then", Toast.LENGTH_SHORT).show()
-//            val goToForgot = Intent(this, ForgotPasswordActivity::class.java)
-//            startActivity(goToForgot)
-//            finish()
+            Toast.makeText(this, "Damn, that sucks", Toast.LENGTH_SHORT).show()
         }
 
 
@@ -67,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(emailText.text.toString(), passwordText.text.toString())
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            val user = auth.currentUser
                             val goToMain = Intent(this, MainActivity::class.java)
                             startActivity(goToMain)
                             this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)

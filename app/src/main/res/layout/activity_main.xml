@@ -8,6 +8,31 @@
     tools:context=".UI.MainActivity">
 
 
+    <TextView
+        android:id="@+id/testOutputCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Here will be output"
+        android:text=""
+        android:textColor="#08A159"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+    <ImageView
+        android:id="@+id/testView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testOutputCall" />
+
     <FrameLayout
         android:id="@+id/layoutFragment"
         android:layout_width="match_parent"
@@ -16,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/testView" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
